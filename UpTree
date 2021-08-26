@@ -1,0 +1,45 @@
+using UnityEngine;
+using System.Collections;
+using UnityEngine.SceneManagement;
+
+
+public class UpTree : MonoBehaviour {
+    public GameObject Player;
+
+    private float nearDistance;
+    private float _distance;
+    [SerializeField]
+    private Vector3 treePosition;
+
+    void Start()
+    {
+       
+    }
+
+    void Update()
+    {
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.name == "tanuki" || col.name == "momonga")
+        {
+            nearDistance = 100;
+            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("TreePosition"))
+            {
+                _distance = Vector3.Distance(obj.transform.position, col.transform.position);
+                if (nearDistance > _distance)
+                {
+                    nearDistance = _distance;
+                    treePosition = obj.transform.position;
+
+                    Player.SendMessage("Stop");
+                    Debug.Log("bb");
+
+                    
+                }
+            }
+            AnimalChange.nowAnimal.transform.position = treePosition;
+        }
+    }
+}
