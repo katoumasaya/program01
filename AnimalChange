@@ -1,0 +1,120 @@
+using UnityEngine;
+using System.Collections;
+using UnityEngine.SceneManagement;
+
+
+public class AnimalChange : MonoBehaviour {
+
+    public GameObject _Tanuki;
+    public GameObject _Musasabi;
+    public GameObject _Kamereon;
+    public GameObject _Inosisi;
+    static public GameObject nowAnimal;
+    public GameObject nowCamera;
+    public GameObject nextCamerea;
+    public int change = 0;
+    public GameSystem _gameSystem;
+    private ChangeSE changese;
+    private int changes = 0;
+
+    public GameObject Smoke;
+
+    void Start()
+    {
+        nowAnimal = _Tanuki;
+        _Musasabi.SetActive(false);
+        _Kamereon.SetActive(false);
+        _Inosisi.SetActive(false);
+        changese = GameObject.Find("player").GetComponent<ChangeSE>();
+    }
+
+
+    void Update()
+    {
+        if (_gameSystem.isMovie == false)
+        {
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown("z"))
+            {
+                ChangeAnimal(_Tanuki);
+                changese.SendMessage("soundRings3", changes);
+                Instantiate(Smoke, nowAnimal.transform.position, Quaternion.Euler(270,0,0));
+            }
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown("x"))
+            {
+                ChangeAnimal(_Musasabi);
+                changese.SendMessage("soundRings3", changes);
+                Instantiate(Smoke, nowAnimal.transform.position, Quaternion.Euler(270, 0, 0));
+
+            }
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown("c"))
+            {
+                ChangeAnimal(_Kamereon);
+                changese.SendMessage("soundRings3", changes);
+                Instantiate(Smoke, nowAnimal.transform.position, Quaternion.Euler(270, 0, 0));
+
+            }
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown("v"))
+            {
+                ChangeAnimal(_Inosisi);
+                changese.SendMessage("soundRings3", changes);
+                Instantiate(Smoke, nowAnimal.transform.position, Quaternion.Euler(270, 0, 0));
+
+            }
+            if (Input.GetKeyDown("e")) Application.Quit();
+
+            if (Input.GetButton("Chanege00") && Input.GetButtonDown("Change"))
+            {
+                ChangeAnimal(_Tanuki);
+                changese.SendMessage("soundRings3", changes);
+                Instantiate(Smoke, nowAnimal.transform.position, Quaternion.Euler(270, 0, 0));
+
+            }
+            if (Input.GetButton("Chanege00") && Input.GetButtonDown("Change2"))
+            {
+                ChangeAnimal(_Musasabi);
+                changese.SendMessage("soundRings3", changes);
+                Instantiate(Smoke, nowAnimal.transform.position, Quaternion.Euler(270, 0, 0));
+
+            }
+            if (Input.GetButton("Chanege00") && Input.GetButtonDown("Change3"))
+            {
+                ChangeAnimal(_Kamereon);
+                changese.SendMessage("soundRings3", changes);
+                Instantiate(Smoke, nowAnimal.transform.position, Quaternion.Euler(270, 0, 0));
+
+            }
+            if (Input.GetButton("Chanege00") && Input.GetButtonDown("Change4"))
+            {
+                ChangeAnimal(_Inosisi);
+                changese.SendMessage("soundRings3", changes);
+                Instantiate(Smoke, nowAnimal.transform.position, Quaternion.Euler(270, 0, 0));
+
+            }
+
+            if (Input.GetButtonDown("Chanege00")) change = 1;
+            if (Input.GetButtonUp("Chanege00")) change = 0;
+
+            
+        }
+    }
+
+    void ChangeAnimal(GameObject nextAnimal)
+    {
+        if (nowAnimal != nextAnimal) {
+            nextAnimal.SetActive(true);
+            nextAnimal.transform.position = nowAnimal.transform.position;
+            nextAnimal.transform.rotation = nowAnimal.transform.rotation;
+            CameraRotationChange(nextAnimal);
+            nowAnimal.SetActive(false);
+            nowAnimal = nextAnimal;
+        }
+    }
+
+    void CameraRotationChange(GameObject _nextAnimal)
+    {
+        nowCamera = nowAnimal.transform.FindChild("CameraAxis").gameObject;
+        nextCamerea = _nextAnimal.transform.FindChild("CameraAxis").gameObject;
+        nextCamerea.transform.rotation = nowCamera.transform.rotation;
+    }
+    
+}
