@@ -1,0 +1,27 @@
+using UnityEngine;
+using System.Collections;
+
+public class TanukiAttack : MonoBehaviour {
+    public float dellCount = 1.0f;
+    public int damage = 1;
+
+	// Use this for initialization
+	void Start () {
+	
+	}
+
+    public void OnTriggerEnter(Collider hit)
+    {
+        if (hit.tag == "Boss")
+        {
+            hit.SendMessage("BossHit", damage);
+        }
+    }
+	
+	// Update is called once per frame
+	void Update () {
+        dellCount -= Time.deltaTime;
+        if (dellCount < 0) Destroy(gameObject);
+	}
+}
+
